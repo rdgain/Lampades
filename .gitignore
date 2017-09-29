@@ -35,3 +35,4 @@ sysinfo.txt
 *.meta
 Lampades/Library/metadata/
 Lampades/Library/ShaderCache/
+Lampades/Temp/

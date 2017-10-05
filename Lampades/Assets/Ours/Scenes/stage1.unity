@@ -764,7 +764,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: '0
+
+    0'
 --- !u!222 &738241690
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -974,13 +976,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1052769012}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.65, y: -2.55, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.0012515734, w: 0.9999992}
+  m_LocalPosition: {x: 3.98, y: -2.56, z: 1}
   m_LocalScale: {x: 0.38824356, y: 0.38824356, z: 0.38824356}
   m_Children: []
   m_Father: {fileID: 619943213}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.143}
 --- !u!61 &1052769015
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1392,6 +1394,7 @@ GameObject:
   - component: {fileID: 1691956683}
   - component: {fileID: 1691956681}
   - component: {fileID: 1691956688}
+  - component: {fileID: 1691956689}
   m_Layer: 9
   m_Name: avatar
   m_TagString: Player
@@ -1570,6 +1573,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14869cb5a95951b4e8b1612232c0fc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1691956689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1691956679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 055c96050385779408e86d31b2731f42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxModel: {fileID: 1221188151014546, guid: d5361bcce62ffdf46a90ad5177c15489, type: 2}
+  stickModel: {fileID: 1000431826857122, guid: f3e9374a6b5b6cf478e7f226e53fd7d5, type: 2}
+  moveSpeed: 0.075
+  rotateSpeed: 0.5
 --- !u!4 &1865812804 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4092383726202298, guid: f3e9374a6b5b6cf478e7f226e53fd7d5,

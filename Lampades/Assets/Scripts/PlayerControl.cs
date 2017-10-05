@@ -42,6 +42,8 @@ public class PlayerControl : MonoBehaviour
         // Add, remove button by (in unity) Edit -> Project Settings -> Input -> Input Manager -> Jump
 		if(Input.GetButtonDown("Jump") && grounded)
 			jump = true;
+
+
 	}
 
 

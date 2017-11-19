@@ -24,7 +24,7 @@ public class Collection : MonoBehaviour {
     List<GameObject> touchingObjects = new List<GameObject>();
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.F))
+        //if (Input.GetKeyDown(KeyCode.F))
         {
             //print("press f");
             for(int i=0;i<touchingObjects.Count;i++)
@@ -44,6 +44,7 @@ public class Collection : MonoBehaviour {
         if(gameObject.tag.Equals("Player") 
             && coll.rigidbody.gameObject.tag.Equals("Collectibles"))
         {
+            print("collide!");
             touchingObjects.Add(coll.rigidbody.gameObject);
         }
         

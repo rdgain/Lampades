@@ -7,32 +7,39 @@ public class JointManager : MonoBehaviour {
     public GameObject boxModel;
     public GameObject stickModel;
 
-    public float moveSpeed = 0.2f;
+    public float moveSpeed = 0.5f;
     public float rotateSpeed = 0.2f;
 
-    bool isSticking = false;
+    float keptMoveForce;
+
+    public CircleCollider2D centerCollider;
+
+    public bool isSticking = false;
     bool isTouching = true;
     GameObject stickingObject;
+    Vector3 storePrevPos;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+        
         if (!isSticking)
         {
             if (Input.GetKeyDown(KeyCode.B))
             {
                 //Need to decrease stuff num in collection down
                 //Need to turn avatar to immovable mode
-                Stick("Stick");
+                Stick("Box");
             }
         }
 
         else
         {
+            
             //move right
             if(Input.GetKey(KeyCode.D))
             {
@@ -69,9 +76,16 @@ public class JointManager : MonoBehaviour {
                 Rotate(Vector3.forward);
             }
 
+            else if (Input.GetKey(KeyCode.R))
+            {
+                stickingObject.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(3,0));
+            }
+
             else if(Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
             {
                 CreateJointAndCollider();
+                GetComponent<PlayerControl>().canMove = true;
+                GetComponent<PlayerControl>().moveForce = keptMoveForce;
             }
 
         }
@@ -85,17 +99,28 @@ public class JointManager : MonoBehaviour {
         //print(stickingObject.GetComponent<Collider2D>().bounds+" "+ GetComponent<Collider2D>().bounds);
         //return isTouching;
 
-        return stickingObject.GetComponent<Collider2D>().bounds.Intersects(GetComponent<Collider2D>().bounds);
+        bool touching = stickingObject.GetComponent<Collider2D>().IsTouching(centerCollider);
+
+        return touching;
     }
 
     void Move(Vector3 trans)
     {
-        Vector3 storePrevPos = stickingObject.transform.position;
+        
         stickingObject.transform.position += trans * moveSpeed;
+        
+
+        //print(canDo +" "+storePrevPos+" "+stickingObject.transform.position);
 
         if(!AllowTransform())
         {
-            stickingObject.transform.position = storePrevPos;
+            //print("restored");
+
+            Vector3 MoveBackDir = transform.position - stickingObject.transform.position;
+
+            stickingObject.transform.position += MoveBackDir.normalized * moveSpeed;
+            //print(stickingObject.transform.position + " " + storePrevPos);
+            
         }
     }
 
@@ -106,7 +131,9 @@ public class JointManager : MonoBehaviour {
 
         if(!AllowTransform())
         {
-            stickingObject.transform.rotation = storeRotation;
+            Vector3 MoveBackDir = transform.position - stickingObject.transform.position;
+
+            stickingObject.transform.position += MoveBackDir.normalized * moveSpeed;
         }
     }
 
@@ -127,13 +154,22 @@ public class JointManager : MonoBehaviour {
         //newStuff.layer = LayerMask.NameToLayer("Sticking");
         newStuff.GetComponent<Collider2D>().isTrigger = true;
         newStuff.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        
+
+        newStuff.GetComponent<CollectiblesManager>().rotating = false;
+        newStuff.GetComponent<SpriteRenderer>().color = new Color(fromRGB(247), fromRGB(151), fromRGB(231), 1);
 
         stickingObject = newStuff;
         
         isSticking = true;
+        GetComponent<PlayerControl>().canMove = false;
+        keptMoveForce = GetComponent<PlayerControl>().moveForce;
+        GetComponent<PlayerControl>().moveForce = 0;
     }
 
+    float fromRGB(int rgb)
+    {
+        return (float)rgb / 255f;
+    }
     //void OnTriggerEnter(Collider coll)
     //{
     //    print("touching " + coll.gameObject.name);

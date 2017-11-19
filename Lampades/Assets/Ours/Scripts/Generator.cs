@@ -12,7 +12,7 @@ public class Generator : MonoBehaviour {
     public GameObject boxModel;
     public float probStick = 0.8f;
     public float probBox = 0.5f;
-    public int numRegion = 10;
+    public int numRegion = 1;
 
     public string[] stuffList = { "Stick", "Box" };
 
@@ -35,7 +35,7 @@ public class Generator : MonoBehaviour {
 
     void GenerateNewFloor()
     {
-        float offset = lastFloor.GetComponent<BoxCollider2D>().size.x / 2 ;
+        float offset = lastFloor.GetComponent<BoxCollider2D>().size.x * lastFloor.transform.localScale.x ;
 
         Vector3 newPos = new Vector3(lastFloor.transform.position.x + offset, lastFloor.transform.position.y, lastFloor.transform.position.z);
 
@@ -47,7 +47,9 @@ public class Generator : MonoBehaviour {
 
     void GenerateStuffOnNewFloor()
     {
-        float floorLength = lastFloor.GetComponent<BoxCollider2D>().size.x / 2;
+        float floorLength = lastFloor.GetComponent<BoxCollider2D>().size.x * lastFloor.transform.localScale.x;
+        
+
         Vector3 floorPos = lastFloor.transform.position;
         float floorPosX = floorPos.x;
 
@@ -70,6 +72,7 @@ public class Generator : MonoBehaviour {
 
             if (randomValue < probBox)
             {
+                //print("box");
                 InstantiateObject(boxModel, currentXPos + randOffset, floorPos);
             }
 
@@ -77,6 +80,7 @@ public class Generator : MonoBehaviour {
 
             if (randomValue < probStick)
             {
+                //print("stick");
                 InstantiateObject(stickModel, currentXPos + randOffset, floorPos);
             }
         }
@@ -84,7 +88,8 @@ public class Generator : MonoBehaviour {
 
     void InstantiateObject(GameObject model, float xPos, Vector3 floorPos)
     {
-        Vector3 position = new Vector3(xPos, floorPos.y, floorPos.z);
-        Instantiate(model, position, lastFloor.transform.rotation);
+        Vector3 position = new Vector3(xPos, floorPos.y+0.5f, floorPos.z);
+        GameObject newBox = Instantiate(model, position, lastFloor.transform.rotation);
+        newBox.GetComponent<SpriteRenderer>().color = new Color(Random.value, Random.value, Random.value, 1.0f);
     }
 }

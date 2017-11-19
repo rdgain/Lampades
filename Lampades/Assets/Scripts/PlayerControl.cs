@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour
 {
+    public bool canMove = true;
 	[HideInInspector]
 	public bool facingRight = true;			// For determining which way the player is currently facing.
 	[HideInInspector]
@@ -22,28 +23,32 @@ public class PlayerControl : MonoBehaviour
 	private Transform groundCheck;			// A position marking where to check if the player is grounded.
 	private bool grounded = false;			// Whether or not the player is grounded.
 	private Animator anim;					// Reference to the player's animator component.
-
+    
 
 	void Awake()
 	{
 		// Setting up references.
 		groundCheck = transform.Find("groundCheck");
 		anim = GetComponent<Animator>();
+        
 	}
 
 
 	void Update()
 	{
-		// The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
-		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  
+        
+        if (canMove)
+        {
+            // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
+            grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
-		// If the jump button is pressed and the player is grounded then the player should jump.
+            // If the jump button is pressed and the player is grounded then the player should jump.
 
-        // Add, remove button by (in unity) Edit -> Project Settings -> Input -> Input Manager -> Jump
-		if(Input.GetButtonDown("Jump") && grounded)
-			jump = true;
+            // Add, remove button by (in unity) Edit -> Project Settings -> Input -> Input Manager -> Jump
+            if (Input.GetButtonDown("Jump") && grounded)
+                jump = true;
 
-
+        }
 	}
 
 

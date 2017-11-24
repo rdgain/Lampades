@@ -35,7 +35,7 @@ public class JointManager : MonoBehaviour {
             {
                 //Need to decrease stuff num in collection down
                 //Create sticking option menu
-                Stick("Box");
+                Stick("Stick");
             }
         }
 
@@ -49,10 +49,21 @@ public class JointManager : MonoBehaviour {
 
     void PreSticking()
     {
+        if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
+        {
+            if (gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                CreateJointAndCollider();
+                ProjectToShadow();
+            }
+            GetComponent<PlayerControl>().canMove = true;
+            GetComponent<PlayerControl>().moveForce = keptMoveForce;
+        }
         if (gameObject.layer != LayerMask.NameToLayer("Player"))
             return;
-            //move right
-            if (Input.GetKey(KeyCode.D))
+
+        //move right
+        if (Input.GetKey(KeyCode.D))
         {
             Move(Vector3.right);
         }
@@ -92,12 +103,12 @@ public class JointManager : MonoBehaviour {
             stickingObject.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(3, 0));
         }
 
-        else if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
-        {
-            CreateJointAndCollider();
-            GetComponent<PlayerControl>().canMove = true;
-            GetComponent<PlayerControl>().moveForce = keptMoveForce;
-        }
+        
+    }
+
+    void ProjectToShadow()
+    {
+
     }
 
     // check if it's still sticking
@@ -202,9 +213,15 @@ public class JointManager : MonoBehaviour {
     void CreateJointAndCollider()
     {
         /*
-         * TODO TODO TODO create joint & bring collider back
+         * create joint & bring collider back
          * */
 
+        stickingObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        stickingObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        FixedJoint2D joint = gameObject.AddComponent<FixedJoint2D>();
+        joint.connectedBody = stickingObject.GetComponent<Rigidbody2D>();
+
+        stickingObject.transform.parent = transform;
 
         isSticking = false;
         stickingObject = null;

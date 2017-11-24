@@ -22,8 +22,9 @@ public class PlayerControl : MonoBehaviour
 	//private int tauntIndex;					// The index of the taunts array indicating the most recent taunt.
 	private Transform groundCheck;			// A position marking where to check if the player is grounded.
 	private bool grounded = false;			// Whether or not the player is grounded.
-	private Animator anim;					// Reference to the player's animator component.
-    
+	private Animator anim;                  // Reference to the player's animator component.
+
+    public GameObject floor;
 
 	void Awake()
 	{
@@ -107,7 +108,25 @@ public class PlayerControl : MonoBehaviour
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+
+        foreach (Transform go in GetComponentsInChildren<Transform>())
+        {
+            if (go.tag == "Collectibles")
+            {
+                //TODO: flip collectibles!
+
+            }
+        }
 	}
+
+    void CheckFalling()
+    {
+        //TODO: fix checking floor falling
+            if (transform.position.y < floor.transform.position.y)
+            {
+                Destroy(gameObject);
+            }
+    }
 
 
 	//public IEnumerator Taunt()

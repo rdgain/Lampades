@@ -59,6 +59,13 @@ public class JointManager : MonoBehaviour {
             GetComponent<PlayerControl>().canMove = true;
             GetComponent<PlayerControl>().moveForce = keptMoveForce;
         }
+        else
+            AdjustObject();
+        
+    }
+
+    void AdjustObject()
+    {
         if (gameObject.layer != LayerMask.NameToLayer("Player"))
             return;
 
@@ -103,12 +110,11 @@ public class JointManager : MonoBehaviour {
             stickingObject.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(3, 0));
         }
 
-        
     }
 
     void ProjectToShadow()
     {
-
+        // TODO: attach this to the shadow
     }
 
     // check if it's still sticking
@@ -191,24 +197,6 @@ public class JointManager : MonoBehaviour {
     {
         return (float)rgb / 255f;
     }
-    //void OnTriggerEnter(Collider coll)
-    //{
-    //    print("touching " + coll.gameObject.name);
-    //    if(coll.gameObject.Equals(stickingObject))
-    //    {
-    //        print("touching");
-    //        isTouching = true;
-    //    }
-    //}
-
-    //void OnTriggerExit(Collider coll)
-    //{
-    //    if(coll.gameObject.Equals(stickingObject))
-    //    {
-    //        print("no touching");
-    //        isTouching = false;
-    //    }
-    //}
 
     void CreateJointAndCollider()
     {
@@ -216,10 +204,13 @@ public class JointManager : MonoBehaviour {
          * create joint & bring collider back
          * */
 
-        stickingObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        stickingObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-        FixedJoint2D joint = gameObject.AddComponent<FixedJoint2D>();
-        joint.connectedBody = stickingObject.GetComponent<Rigidbody2D>();
+        //stickingObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        //stickingObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        //FixedJoint2D joint = gameObject.AddComponent<FixedJoint2D>();
+        //joint.connectedBody = stickingObject.GetComponent<Rigidbody2D>();
+
+        stickingObject.GetComponent<Collider2D>().enabled = false;
+        stickingObject.GetComponent<Rigidbody2D>().isKinematic = true;
 
         stickingObject.transform.parent = transform;
 

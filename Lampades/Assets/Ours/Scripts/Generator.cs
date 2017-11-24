@@ -108,6 +108,8 @@ public class Generator : MonoBehaviour {
         Transform tmpParent = lastFloor.transform.parent;
         lastFloor = Instantiate(preFloor, newPos, lastFloor.transform.rotation);
         lastFloor.transform.SetParent(tmpParent);
+
+        player.GetComponent<PlayerControl>().floor = lastFloor;
         
     }
 

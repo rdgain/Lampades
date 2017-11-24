@@ -50,6 +50,8 @@ public class PlayerControl : MonoBehaviour
                 jump = true;
 
         }
+
+        CheckFalling();
 	}
 
 
@@ -122,10 +124,16 @@ public class PlayerControl : MonoBehaviour
     void CheckFalling()
     {
         //TODO: fix checking floor falling
-            if (transform.position.y < floor.transform.position.y)
+            if (GetComponent<Collider2D>().bounds.max.y < floor.GetComponent<Collider2D>().bounds.min.y)
             {
                 Destroy(gameObject);
+                GameOver();
             }
+    }
+
+    void GameOver()
+    {
+        Application.Quit();
     }
 
 

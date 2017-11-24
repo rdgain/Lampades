@@ -33,7 +33,3 @@ sysinfo.txt
 *.apk
 *.unitypackage
 *.meta
-Lampades/Library/metadata/
-Lampades/Library/ShaderCache/
-Lampades/Temp/
-Lampades/.vs/

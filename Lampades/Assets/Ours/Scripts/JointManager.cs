@@ -7,6 +7,8 @@ public class JointManager : MonoBehaviour {
     public GameObject boxModel;
     public GameObject stickModel;
 
+    public bool insideLight = false;
+
     public float moveSpeed = 0.5f;
     public float rotateSpeed = 0.2f;
 
@@ -29,69 +31,74 @@ public class JointManager : MonoBehaviour {
         
         if (!isSticking)
         {
-            if (Input.GetKeyDown(KeyCode.B))
+            if (Input.GetKeyDown(KeyCode.B) && insideLight)
             {
                 //Need to decrease stuff num in collection down
-                //Need to turn avatar to immovable mode
+                //Create sticking option menu
                 Stick("Box");
             }
         }
 
         else
         {
-            
-            //move right
-            if(Input.GetKey(KeyCode.D))
-            {
-                Move(Vector3.right);
-            }
-
-            //move left
-            else if (Input.GetKey(KeyCode.A))
-            {
-                Move(Vector3.left);
-            }
-
-            //move up
-            else if (Input.GetKey(KeyCode.W))
-            {
-                Move(Vector3.up);
-            }
-
-            //move down
-            else if (Input.GetKey(KeyCode.S))
-            {
-                Move(Vector3.down);
-            }
-
-            //rotate cw
-            else if (Input.GetKey(KeyCode.E))
-            {
-                Rotate(Vector3.back);
-            }
-
-            //rotate ccw
-            else if (Input.GetKey(KeyCode.Q))
-            {
-                Rotate(Vector3.forward);
-            }
-
-            else if (Input.GetKey(KeyCode.R))
-            {
-                stickingObject.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(3,0));
-            }
-
-            else if(Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
-            {
-                CreateJointAndCollider();
-                GetComponent<PlayerControl>().canMove = true;
-                GetComponent<PlayerControl>().moveForce = keptMoveForce;
-            }
-
+            PreSticking();
         }
 
         //print("focusJoint connect with " + focusJoint.connectedBody.name);
 	}
+
+    void PreSticking()
+    {
+        if (gameObject.layer != LayerMask.NameToLayer("Player"))
+            return;
+            //move right
+            if (Input.GetKey(KeyCode.D))
+        {
+            Move(Vector3.right);
+        }
+
+        //move left
+        else if (Input.GetKey(KeyCode.A))
+        {
+            Move(Vector3.left);
+        }
+
+        //move up
+        else if (Input.GetKey(KeyCode.W))
+        {
+            Move(Vector3.up);
+        }
+
+        //move down
+        else if (Input.GetKey(KeyCode.S))
+        {
+            Move(Vector3.down);
+        }
+
+        //rotate cw
+        else if (Input.GetKey(KeyCode.E))
+        {
+            Rotate(Vector3.back);
+        }
+
+        //rotate ccw
+        else if (Input.GetKey(KeyCode.Q))
+        {
+            Rotate(Vector3.forward);
+        }
+
+        else if (Input.GetKey(KeyCode.R))
+        {
+            stickingObject.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(3, 0));
+        }
+
+        else if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
+        {
+            CreateJointAndCollider();
+            GetComponent<PlayerControl>().canMove = true;
+            GetComponent<PlayerControl>().moveForce = keptMoveForce;
+        }
+    }
 
     // check if it's still sticking
     bool AllowTransform()
@@ -149,7 +156,10 @@ public class JointManager : MonoBehaviour {
             toStick = stickModel;
 
         else toStick = null;
-        
+
+        if (gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+
         GameObject newStuff = Instantiate(toStick, transform.position, transform.rotation);
         //newStuff.layer = LayerMask.NameToLayer("Sticking");
         newStuff.GetComponent<Collider2D>().isTrigger = true;
@@ -159,7 +169,7 @@ public class JointManager : MonoBehaviour {
         newStuff.GetComponent<SpriteRenderer>().color = new Color(fromRGB(247), fromRGB(151), fromRGB(231), 1);
 
         stickingObject = newStuff;
-        
+    }
         isSticking = true;
         GetComponent<PlayerControl>().canMove = false;
         keptMoveForce = GetComponent<PlayerControl>().moveForce;

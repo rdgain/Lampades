@@ -6,29 +6,95 @@ public class Generator : MonoBehaviour {
 
     public GameObject lastFloor;
     public GameObject preFloor;
+    public GameObject preLight;
+    public GameObject realLight;
     public Camera camera;
 
     public GameObject stickModel;
     public GameObject boxModel;
+    public int countPlatform;
     public float probStick = 0.8f;
     public float probBox = 0.5f;
     public int numRegion = 1;
+
+    public GameObject player;
+    float moveForce;
 
     public string[] stuffList = { "Stick", "Box" };
 
     // Use this for initialization
     void Start () {
+        moveForce = player.GetComponent<PlayerControl>().moveForce;
     }
 	
 	// Update is called once per frame
 	void Update () {
 
+        ManageFloor();
+
+        if (isPlayerInsideLight())
+        {
+            player.GetComponent<JointManager>().insideLight = true;
+        }
+
+        else
+        {
+            player.GetComponent<JointManager>().insideLight = false;
+        }
+    }
+
+    bool isPlayerInsideLight()
+    {
+        if (realLight == null)
+            return false;
+
+        Bounds playerBound = player.GetComponent<Collider2D>().bounds;
+        Bounds lightBound = realLight.GetComponent<Collider2D>().bounds;
+
+        //if (!tag.Equals("Real"))
+        //{
+        //    print("light: " + lightBound);
+        //    print("player: min " + playerBound.min + ", max " + playerBound.max);
+
+        //    print(lightBound.Contains(playerBound.max) && lightBound.Contains(playerBound.min));
+        //}
+        return lightBound.Contains(playerBound.max) && lightBound.Contains(playerBound.min);
+    }
+
+    void ManageFloor()
+    {
         if (camera.transform.position.x > lastFloor.transform.position.x)
         {
-            GenerateNewFloor();
+            if (countPlatform > 1)
+            {
+                GenerateNewFloor();
+                if (tag.Equals("Real"))
+                    GenerateStuffOnNewFloor();
 
-            if(tag.Equals("Real"))
-                GenerateStuffOnNewFloor();
+                countPlatform--;
+            }
+
+            //end of level
+            else if(countPlatform == 1)
+            {
+                GenerateNewFloor();
+                PutLightOnNewFloor();
+                countPlatform = 0;
+            }
+
+        }
+    }
+
+    void PutLightOnNewFloor()
+    {
+        Transform tmpParent = lastFloor.transform.parent;
+        realLight = Instantiate(preLight, lastFloor.transform.position, preLight.transform.rotation);
+        
+        realLight.transform.SetParent(tmpParent);
+
+        if(!tag.Equals("Real"))
+        {
+            realLight.GetComponent<SpriteRenderer>().color = Color.black;
         }
 
     }

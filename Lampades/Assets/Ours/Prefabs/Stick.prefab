@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61556691625142136}
   - component: {fileID: 114778066717191720}
   - component: {fileID: 50895791576804978}
-  m_Layer: 13
+  m_Layer: 8
   m_Name: Stick
   m_TagString: Collectibles
   m_Icon: {fileID: 0}
@@ -100,6 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotating: 1
+  collected: 0
+  stuck: 0
+  stuckPosition: {x: 0, y: 0, z: 0}
   rotateSpeed: 5
 --- !u!212 &212461836455505110
 SpriteRenderer:

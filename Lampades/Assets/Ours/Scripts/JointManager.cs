@@ -183,6 +183,7 @@ public class JointManager : MonoBehaviour {
         newStuff.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
         newStuff.GetComponent<CollectiblesManager>().rotating = false;
+        newStuff.GetComponent<CollectiblesManager>().collected = true;
         newStuff.GetComponent<SpriteRenderer>().color = new Color(fromRGB(247), fromRGB(151), fromRGB(231), 1);
 
         stickingObject = newStuff;
@@ -204,15 +205,19 @@ public class JointManager : MonoBehaviour {
          * create joint & bring collider back
          * */
 
-        //stickingObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         //stickingObject.GetComponent<Rigidbody2D>().gravityScale = 0;
         //FixedJoint2D joint = gameObject.AddComponent<FixedJoint2D>();
         //joint.connectedBody = stickingObject.GetComponent<Rigidbody2D>();
 
-        stickingObject.GetComponent<Collider2D>().enabled = false;
-        stickingObject.GetComponent<Rigidbody2D>().isKinematic = true;
+        stickingObject.GetComponent<Collider2D>().enabled = true;
+        stickingObject.layer = LayerMask.NameToLayer("Sticking");
+        stickingObject.GetComponent<CollectiblesManager>().stuck = true;
+        
 
         stickingObject.transform.parent = transform;
+        stickingObject.GetComponent<CollectiblesManager>().stuckPosition = stickingObject.transform.localPosition;
+        stickingObject.GetComponent<Collider2D>().isTrigger = false;
+        Destroy(stickingObject.GetComponent<Rigidbody2D>());
 
         isSticking = false;
         stickingObject = null;

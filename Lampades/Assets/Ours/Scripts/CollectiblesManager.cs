@@ -5,6 +5,8 @@ using UnityEngine;
 public class CollectiblesManager : MonoBehaviour {
 
     public bool rotating = true;
+    public bool collected = false, stuck = false;
+    public Vector3 stuckPosition;
     public float rotateSpeed = 5f;
 	// Use this for initialization
 	void Start () {
@@ -13,6 +15,11 @@ public class CollectiblesManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (collected && stuck)
+        {
+            transform.localPosition = stuckPosition;
+            print(name+" "+transform.position);
+        }
 
         if(rotating)
             rotate();

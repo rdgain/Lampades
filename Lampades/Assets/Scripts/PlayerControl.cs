@@ -10,8 +10,8 @@ public class PlayerControl : MonoBehaviour
 	public bool jump = false;				// Condition for whether the player should jump.
 
 
-	public float moveForce = 365f;			// Amount of force added to move the player left and right.
-	public float maxSpeed = 5f;				// The fastest the player can travel in the x axis.
+	public float moveForce;			// Amount of force added to move the player left and right.
+	public float maxSpeed;				// The fastest the player can travel in the x axis.
 	public AudioClip[] jumpClips;			// Array of clips for when the player jumps.
 	public float jumpForce = 1000f;			// Amount of force added when the player jumps.
 	//public AudioClip[] taunts;				// Array of clips for when the player taunts.
@@ -25,6 +25,8 @@ public class PlayerControl : MonoBehaviour
 	private Animator anim;                  // Reference to the player's animator component.
 
     public GameObject floor;
+
+    float time;
 
 	void Awake()
 	{
@@ -46,6 +48,7 @@ public class PlayerControl : MonoBehaviour
             // If the jump button is pressed and the player is grounded then the player should jump.
 
             // Add, remove button by (in unity) Edit -> Project Settings -> Input -> Input Manager -> Jump
+            print(name + " " + grounded);
             if (Input.GetButtonDown("Jump") && grounded)
                 jump = true;
 
@@ -66,7 +69,7 @@ public class PlayerControl : MonoBehaviour
 		// If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
 		if(h * GetComponent<Rigidbody2D>().velocity.x < maxSpeed)
 			// ... add a force to the player.
-			GetComponent<Rigidbody2D>().AddForce(Vector2.right * h * moveForce);
+			GetComponent<Rigidbody2D>().AddForce(Vector2.right * h * moveForce * (100*Time.deltaTime));
 
 		// If the player's horizontal velocity is greater than the maxSpeed...
 		if(Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > maxSpeed)
@@ -81,6 +84,8 @@ public class PlayerControl : MonoBehaviour
 		else if(h < 0 && facingRight)
 			// ... flip the player.
 			Flip();
+
+        //print(gameObject.name+" "+Time.deltaTime+" "+gameObject.transform.position);
 
 		// If the player should jump...
 		if(jump)
@@ -110,15 +115,6 @@ public class PlayerControl : MonoBehaviour
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
-
-        foreach (Transform go in GetComponentsInChildren<Transform>())
-        {
-            if (go.tag == "Collectibles")
-            {
-                //TODO: flip collectibles!
-
-            }
-        }
 	}
 
     void CheckFalling()

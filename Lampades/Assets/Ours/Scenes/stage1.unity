@@ -202,8 +202,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1783731295
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 278171059031dfd4590b6b901695ef77, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -277,13 +277,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21e2cf2f9df644843ba68d24356633ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxModel: {fileID: 0}
-  stickModel: {fileID: 0}
+  boxModel: {fileID: 1084888447266562, guid: d2a146edbd9c05e42af850fabed55084, type: 2}
+  stickModel: {fileID: 1457177172561208, guid: 74d900b29a32c904b8df8f6228e4a1db, type: 2}
   insideLight: 0
-  moveSpeed: 0.5
-  rotateSpeed: 0.2
+  moveSpeed: 0.075
+  rotateSpeed: 2
   centerCollider: {fileID: 0}
   isSticking: 0
+  another: {fileID: 1691956679}
 --- !u!50 &71481062
 Rigidbody2D:
   serializedVersion: 4
@@ -585,6 +586,18 @@ Prefab:
       propertyPath: player
       value: 
       objectReference: {fileID: 71481056}
+    - target: {fileID: 100002, guid: af80fe7abb2604963b7e7b5a24685a6b, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: af80fe7abb2604963b7e7b5a24685a6b, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: af80fe7abb2604963b7e7b5a24685a6b, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af80fe7abb2604963b7e7b5a24685a6b, type: 2}
   m_IsPrefabParent: 0
@@ -605,7 +618,6 @@ GameObject:
   m_Component:
   - component: {fileID: 619943213}
   - component: {fileID: 619943214}
-  - component: {fileID: 619943215}
   m_Layer: 0
   m_Name: realworld
   m_TagString: Real
@@ -624,7 +636,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1263275317}
-  - {fileID: 1607341796}
   - {fileID: 1691956680}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -655,17 +666,6 @@ MonoBehaviour:
   stuffList:
   - Stick
   - Box
---- !u!114 &619943215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 619943212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66547c9691f2c0b418d720a79411a08f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &738241687
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,7 +830,6 @@ RectTransform:
   - {fileID: 738241688}
   - {fileID: 1158915460}
   - {fileID: 1344391493}
-  - {fileID: 1064445846}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -896,86 +895,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d5361bcce62ffdf46a90ad5177c15489, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1064445845
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1064445846}
-  - component: {fileID: 1064445848}
-  - component: {fileID: 1064445847}
-  - component: {fileID: 1064445849}
-  m_Layer: 5
-  m_Name: ObjectSelectorMenu
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1064445846
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1064445845}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 998031658}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 488, y: 257.4}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1064445847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1064445845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &1064445848
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1064445845}
---- !u!114 &1064445849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1064445845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66547c9691f2c0b418d720a79411a08f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1158915459
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,6 +989,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1927931260}
+  - {fileID: 1607341796}
   m_Father: {fileID: 619943213}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1150,7 +1070,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4457567322051596, guid: a948bc7956d0c854bb1a46a767e03924, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.23
       objectReference: {fileID: 0}
     - target: {fileID: 4457567322051596, guid: a948bc7956d0c854bb1a46a767e03924, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1285,10 +1205,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1607341790}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.9, z: -9}
+  m_LocalPosition: {x: 0, y: -1.8999996, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 619943213}
+  m_Father: {fileID: 1263275317}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1663477113
@@ -1348,7 +1268,6 @@ GameObject:
   - component: {fileID: 1691956682}
   - component: {fileID: 1691956687}
   - component: {fileID: 1691956686}
-  - component: {fileID: 1691956683}
   - component: {fileID: 1691956681}
   - component: {fileID: 1691956688}
   - component: {fileID: 1691956689}
@@ -1374,7 +1293,7 @@ Transform:
   - {fileID: 1871789849}
   - {fileID: 509444278}
   m_Father: {fileID: 619943213}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1691956681
 MonoBehaviour:
@@ -1439,23 +1358,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!95 &1691956683
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1691956679}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1ad1c509ffb314b2b933a73b401aae26, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 1
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!58 &1691956684
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1557,6 +1459,7 @@ MonoBehaviour:
   rotateSpeed: 2
   centerCollider: {fileID: 1691956685}
   isSticking: 0
+  another: {fileID: 71481055}
 --- !u!1 &1871789848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1686,8 +1589,8 @@ MonoBehaviour:
   preLight: {fileID: 1368826814878846, guid: 45d9968cb22267e4d8f2a22b78ec13e1, type: 2}
   realLight: {fileID: 0}
   camera: {fileID: 108676378}
-  stickModel: {fileID: 1000431826857122, guid: f3e9374a6b5b6cf478e7f226e53fd7d5, type: 2}
-  boxModel: {fileID: 1221188151014546, guid: d5361bcce62ffdf46a90ad5177c15489, type: 2}
+  stickModel: {fileID: 1457177172561208, guid: 74d900b29a32c904b8df8f6228e4a1db, type: 2}
+  boxModel: {fileID: 1084888447266562, guid: d2a146edbd9c05e42af850fabed55084, type: 2}
   countPlatform: 1
   probStick: 0.8
   probBox: 0.5

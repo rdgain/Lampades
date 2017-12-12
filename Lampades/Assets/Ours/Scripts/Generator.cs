@@ -29,7 +29,6 @@ public class Generator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         ManageFloor();
 
         if (isPlayerInsideLight())
@@ -45,6 +44,7 @@ public class Generator : MonoBehaviour {
 
     bool isPlayerInsideLight()
     {
+
         if (realLight == null)
             return false;
 
@@ -87,14 +87,14 @@ public class Generator : MonoBehaviour {
 
     void PutLightOnNewFloor()
     {
-        Transform tmpParent = lastFloor.transform.parent;
-        realLight = Instantiate(preLight, lastFloor.transform.position, preLight.transform.rotation);
         
-        realLight.transform.SetParent(tmpParent);
-
-        if(!tag.Equals("Real"))
+        if(tag.Equals("Real"))
         {
-            realLight.GetComponent<SpriteRenderer>().color = Color.black;
+            Transform tmpParent = lastFloor.transform.parent;
+            realLight = Instantiate(preLight, lastFloor.transform.position, preLight.transform.rotation);
+
+            realLight.transform.SetParent(tmpParent);
+            //realLight.GetComponent<SpriteRenderer>().color = Color.black;
         }
 
     }

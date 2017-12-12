@@ -9,8 +9,8 @@ public class JointManager : MonoBehaviour {
 
     public bool insideLight = false;
 
-    public float moveSpeed = 0.5f;
-    public float rotateSpeed = 0.2f;
+    public float moveSpeed = 0.075f;
+    public float rotateSpeed = 2f;
 
     float keptMoveForce;
 
@@ -21,21 +21,33 @@ public class JointManager : MonoBehaviour {
     GameObject stickingObject;
     Vector3 storePrevPos;
 
-    // Use this for initialization
-    void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    public GameObject another;
 
-        
+    // Use this for initialization
+    void Start() {
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+
         if (!isSticking)
         {
-            if (Input.GetKeyDown(KeyCode.B) && insideLight)
+            if (Input.GetKeyDown(KeyCode.B))
             {
                 //Need to decrease stuff num in collection down
                 //Create sticking option menu
-                Stick("Stick");
+
+                if (name.Equals("shadow"))
+                {
+                    if (another.GetComponent<JointManager>().insideLight)
+                        Stick(SelectStickingModel());
+                }
+
+                else if (insideLight)
+                {
+                    Stick(SelectStickingModel());
+                }
             }
         }
 
@@ -45,13 +57,20 @@ public class JointManager : MonoBehaviour {
         }
 
         //print("focusJoint connect with " + focusJoint.connectedBody.name);
-	}
+    }
+
+    string SelectStickingModel()
+    {
+        //TODO create object selector
+        return "Stick";
+        //return "Box";
+    }
 
     void PreSticking()
     {
         if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
         {
-            if (gameObject.layer == LayerMask.NameToLayer("Player"))
+            //if (gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 CreateJointAndCollider();
                 ProjectToShadow();
@@ -66,8 +85,8 @@ public class JointManager : MonoBehaviour {
 
     void AdjustObject()
     {
-        if (gameObject.layer != LayerMask.NameToLayer("Player"))
-            return;
+        //if (gameObject.layer != LayerMask.NameToLayer("Player"))
+        //    return;
 
         //move right
         if (Input.GetKey(KeyCode.D))
@@ -114,7 +133,7 @@ public class JointManager : MonoBehaviour {
 
     void ProjectToShadow()
     {
-        // TODO: attach this to the shadow
+        // TODO: maybe do the 'satisfy sticking condition check' and vroom vroom!
     }
 
     // check if it's still sticking
@@ -122,6 +141,9 @@ public class JointManager : MonoBehaviour {
     {
         //print(stickingObject.GetComponent<Collider2D>().bounds+" "+ GetComponent<Collider2D>().bounds);
         //return isTouching;
+
+        if (gameObject.name.Equals("shadow"))
+            return another.GetComponent<JointManager>().AllowTransform();
 
         bool touching = stickingObject.GetComponent<Collider2D>().IsTouching(centerCollider);
 
@@ -174,7 +196,7 @@ public class JointManager : MonoBehaviour {
 
         else toStick = null;
 
-        if (gameObject.layer == LayerMask.NameToLayer("Player"))
+        //if (gameObject.layer == LayerMask.NameToLayer("Player"))
         {
 
         GameObject newStuff = Instantiate(toStick, transform.position, transform.rotation);
@@ -184,7 +206,13 @@ public class JointManager : MonoBehaviour {
 
         newStuff.GetComponent<CollectiblesManager>().rotating = false;
         newStuff.GetComponent<CollectiblesManager>().collected = true;
-        newStuff.GetComponent<SpriteRenderer>().color = new Color(fromRGB(247), fromRGB(151), fromRGB(231), 1);
+    
+        if(name.Equals("avatar"))
+        {
+            newStuff.GetComponent<SpriteRenderer>().color = new Color(fromRGB(247), fromRGB(151), fromRGB(231), 1);
+        }
+
+        
 
         stickingObject = newStuff;
     }
@@ -218,6 +246,11 @@ public class JointManager : MonoBehaviour {
         stickingObject.GetComponent<CollectiblesManager>().stuckPosition = stickingObject.transform.localPosition;
         stickingObject.GetComponent<Collider2D>().isTrigger = false;
         Destroy(stickingObject.GetComponent<Rigidbody2D>());
+
+        if (gameObject.name.Equals("avatar"))
+        {
+            gameObject.GetComponent<Collection>().StickedStuff(stickingObject);
+        }
 
         isSticking = false;
         stickingObject = null;

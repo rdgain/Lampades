@@ -44,7 +44,7 @@ public class Collection : MonoBehaviour {
         if(gameObject.tag.Equals("Player") 
             && coll.rigidbody.gameObject.tag.Equals("Collectibles"))
         {
-            print("collide!");
+            //print("collide!");
             touchingObjects.Add(coll.rigidbody.gameObject);
         }
         
@@ -57,12 +57,25 @@ public class Collection : MonoBehaviour {
 
     void PickUpStuffs(GameObject pickUpObject)
     {
-        string name_cut = pickUpObject.name.Split('(')[0];
+        string name_cut = getKeyFromName(pickUpObject);
         Destroy(pickUpObject);
         stuffs[name_cut] = stuffs[name_cut] + 1;
         UpdateStuffSize();
         //print("added");
         //print(stuffs[name_cut]);
+    }
+
+    public void StickedStuff(GameObject model)
+    {
+        string key = getKeyFromName(model);
+        stuffs[key] = stuffs[key] - 1;
+        UpdateStuffSize();
+    }
+
+    string getKeyFromName(GameObject model)
+    {
+        string name_cut = model.name.Split('(')[0];
+        return name_cut;
     }
 
     void UpdateStuffSize()

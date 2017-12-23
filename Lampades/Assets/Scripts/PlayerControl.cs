@@ -77,11 +77,11 @@ public class PlayerControl : MonoBehaviour
 			GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
 
 		// If the input is moving the player right and the player is facing left...
-		if(h > 0 && !facingRight)
+		if(h > 0 && !facingRight && canMove)
 			// ... flip the player.
 			Flip();
 		// Otherwise if the input is moving the player left and the player is facing right...
-		else if(h < 0 && facingRight)
+		else if(h < 0 && facingRight && canMove)
 			// ... flip the player.
 			Flip();
 

@@ -21,10 +21,14 @@ public class JointManager : MonoBehaviour {
     GameObject stickingObject;
     Vector3 storePrevPos;
 
+    string[] stuffList;
+    int pickingIndex = 0;
+
     public GameObject another;
 
     // Use this for initialization
     void Start() {
+        stuffList = GetComponentInParent<Generator>().stuffList;
     }
 
     // Update is called once per frame
@@ -38,15 +42,17 @@ public class JointManager : MonoBehaviour {
                 //Need to decrease stuff num in collection down
                 //Create sticking option menu
 
+                selectIndex(pickingIndex,1);
+
                 if (name.Equals("shadow"))
                 {
                     if (another.GetComponent<JointManager>().insideLight)
-                        Stick(SelectStickingModel());
+                        Stick(stuffList[pickingIndex]);
                 }
 
                 else if (insideLight)
                 {
-                    Stick(SelectStickingModel());
+                    Stick(stuffList[pickingIndex]);
                 }
             }
         }
@@ -59,15 +65,49 @@ public class JointManager : MonoBehaviour {
         //print("focusJoint connect with " + focusJoint.connectedBody.name);
     }
 
-    string SelectStickingModel()
+    void SelectStickingModel()
     {
-        //TODO create object selector
-        return "Stick";
-        //return "Box";
+        int storedCurrent = pickingIndex;
+        int direction = 0;
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            direction = -1;
+
+        }
+
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            direction = 1;
+        }
+
+        //loop until find one != 0, or back to the same index again
+        if (direction != 0)
+        {
+
+            selectIndex(storedCurrent, direction);
+
+        if (pickingIndex != storedCurrent)
+        {
+            Destroy(stickingObject);
+            Stick(stuffList[pickingIndex]);
+        }
+        }
+
     }
+
+    void selectIndex(int storedCurrent, int direction)
+    {
+        do
+        {
+            pickingIndex = (pickingIndex + direction) % stuffList.Length;
+        } while (GetComponent<Collection>().stuffs[stuffList[pickingIndex]] == 0 && pickingIndex != storedCurrent);
+    }
+
 
     void PreSticking()
     {
+        
         if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
         {
             //if (gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -78,6 +118,7 @@ public class JointManager : MonoBehaviour {
             GetComponent<PlayerControl>().canMove = true;
             GetComponent<PlayerControl>().moveForce = keptMoveForce;
         }
+
         else
             AdjustObject();
         
@@ -85,11 +126,16 @@ public class JointManager : MonoBehaviour {
 
     void AdjustObject()
     {
+        if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            SelectStickingModel();
+        }
+
         //if (gameObject.layer != LayerMask.NameToLayer("Player"))
         //    return;
 
         //move right
-        if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
             Move(Vector3.right);
         }

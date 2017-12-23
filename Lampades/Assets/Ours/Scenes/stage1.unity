@@ -229,6 +229,7 @@ MonoBehaviour:
   canMove: 1
   facingRight: 1
   jump: 0
+  keptMoveForce: 0
   moveForce: 365
   maxSpeed: 8
   jumpClips: []
@@ -601,6 +602,28 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af80fe7abb2604963b7e7b5a24685a6b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &491197314 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1154297931207618, guid: f3e9374a6b5b6cf478e7f226e53fd7d5,
+    type: 2}
+  m_PrefabInternal: {fileID: 286664677}
+--- !u!95 &491197320
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 491197314}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 41181a0427a71334cbb53b231063fe4b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!4 &509444278 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: af80fe7abb2604963b7e7b5a24685a6b, type: 2}
@@ -698,7 +721,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 151.78, y: -258.19}
+  m_AnchoredPosition: {x: 152.9, y: -287.3}
   m_SizeDelta: {x: 164.04, y: 46.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &738241689
@@ -1422,6 +1445,7 @@ MonoBehaviour:
   canMove: 1
   facingRight: 1
   jump: 0
+  keptMoveForce: 0
   moveForce: 365
   maxSpeed: 8
   jumpClips:

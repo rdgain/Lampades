@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61816512675294264}
   - component: {fileID: 114082605188749078}
   - component: {fileID: 50858900454673864}
+  - component: {fileID: 114866160393555086}
   m_Layer: 8
   m_Name: Stick_shadow
   m_TagString: Collectibles
@@ -104,6 +105,21 @@ MonoBehaviour:
   stuck: 0
   stuckPosition: {x: 0, y: 0, z: 0}
   rotateSpeed: 5
+--- !u!114 &114866160393555086
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1457177172561208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edf422c7b28f5384ea0cd04a3c482383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swordSprite: {fileID: 1979695840857976, guid: bb0729f24d833b5419b4f959afbdeca8,
+    type: 2}
+  swordCondition: 0
+  finishedSticking: 0
 --- !u!212 &212151621542294282
 SpriteRenderer:
   m_ObjectHideFlags: 1

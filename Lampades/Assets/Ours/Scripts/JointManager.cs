@@ -17,7 +17,6 @@ public class JointManager : MonoBehaviour {
     public CircleCollider2D centerCollider;
 
     public bool isSticking = false;
-    bool isTouching = true;
     GameObject stickingObject;
     Vector3 storePrevPos;
 
@@ -44,15 +43,24 @@ public class JointManager : MonoBehaviour {
 
                 selectIndex(pickingIndex,1);
 
-                if (name.Equals("shadow"))
-                {
-                    if (another.GetComponent<JointManager>().insideLight)
-                        Stick(stuffList[pickingIndex]);
-                }
+                //if (name.Equals("shadow"))
+                //{
+                //    pickingIndex = another.GetComponent<JointManager>().pickingIndex;
+                //    if (another.GetComponent<JointManager>().insideLight)
+                //    {
+                //        Stick(stuffList[pickingIndex]);
+                //    }
+                //}
 
-                else if (insideLight)
+                if (name.Equals("avatar") && insideLight)
                 {
+                    if (GetComponent<Collection>().stuffs[stuffList[pickingIndex]] == 0)
+                    {
+                        //TODO: pop up nothing left
+                        return;
+                    }
                     Stick(stuffList[pickingIndex]);
+                    another.GetComponent<JointManager>().Stick(stuffList[pickingIndex]);
                 }
             }
         }
@@ -87,20 +95,29 @@ public class JointManager : MonoBehaviour {
 
             selectIndex(storedCurrent, direction);
 
-        if (pickingIndex != storedCurrent)
-        {
+              if (pickingIndex != storedCurrent)
+            {
             Destroy(stickingObject);
             Stick(stuffList[pickingIndex]);
-        }
+
+                Destroy(another.GetComponent<JointManager>().stickingObject);
+                another.GetComponent<JointManager>().Stick(stuffList[pickingIndex]);
+            }
         }
 
     }
 
     void selectIndex(int storedCurrent, int direction)
     {
+        if (name.Equals("shadow"))
+        {
+            
+            return;
+        }
+
         do
         {
-            pickingIndex = (pickingIndex + direction) % stuffList.Length;
+            pickingIndex = (pickingIndex + direction + stuffList.Length) % stuffList.Length;
         } while (GetComponent<Collection>().stuffs[stuffList[pickingIndex]] == 0 && pickingIndex != storedCurrent);
     }
 
@@ -113,8 +130,8 @@ public class JointManager : MonoBehaviour {
             //if (gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 CreateJointAndCollider();
-                ProjectToShadow();
             }
+    //        print(keptMoveForce);
             GetComponent<PlayerControl>().canMove = true;
             GetComponent<PlayerControl>().moveForce = keptMoveForce;
         }
@@ -175,11 +192,6 @@ public class JointManager : MonoBehaviour {
             stickingObject.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(3, 0));
         }
 
-    }
-
-    void ProjectToShadow()
-    {
-        // TODO: maybe do the 'satisfy sticking condition check' and vroom vroom!
     }
 
     // check if it's still sticking
@@ -263,8 +275,8 @@ public class JointManager : MonoBehaviour {
         stickingObject = newStuff;
     }
         isSticking = true;
+        keptMoveForce = GetComponent<PlayerControl>().keptMoveForce;
         GetComponent<PlayerControl>().canMove = false;
-        keptMoveForce = GetComponent<PlayerControl>().moveForce;
         GetComponent<PlayerControl>().moveForce = 0;
     }
 
@@ -287,6 +299,12 @@ public class JointManager : MonoBehaviour {
         stickingObject.layer = LayerMask.NameToLayer("Sticking");
         stickingObject.GetComponent<CollectiblesManager>().stuck = true;
         
+        //TODO this is not nice, have to find some way to make this less hard code
+        if(stickingObject.name.Contains("Stick"))
+        {
+            stickingObject.GetComponent<StickConditionChecker>().finishedSticking = true;
+        }
+        
 
         stickingObject.transform.parent = transform;
         stickingObject.GetComponent<CollectiblesManager>().stuckPosition = stickingObject.transform.localPosition;
@@ -300,5 +318,6 @@ public class JointManager : MonoBehaviour {
 
         isSticking = false;
         stickingObject = null;
+
     }
 }

@@ -9,7 +9,7 @@ public class PlayerControl : MonoBehaviour
 	[HideInInspector]
 	public bool jump = false;				// Condition for whether the player should jump.
 
-
+    public float keptMoveForce;
 	public float moveForce;			// Amount of force added to move the player left and right.
 	public float maxSpeed;				// The fastest the player can travel in the x axis.
 	public AudioClip[] jumpClips;			// Array of clips for when the player jumps.
@@ -33,12 +33,14 @@ public class PlayerControl : MonoBehaviour
 		// Setting up references.
 		groundCheck = transform.Find("groundCheck");
 		anim = GetComponent<Animator>();
+        keptMoveForce = moveForce;
         
 	}
 
 
 	void Update()
 	{
+    //    print(canMove + " " + moveForce);
         
         if (canMove)
         {
@@ -48,7 +50,7 @@ public class PlayerControl : MonoBehaviour
             // If the jump button is pressed and the player is grounded then the player should jump.
 
             // Add, remove button by (in unity) Edit -> Project Settings -> Input -> Input Manager -> Jump
-            print(name + " " + grounded);
+         //   print(name + " " + grounded);
             if (Input.GetButtonDown("Jump") && grounded)
                 jump = true;
 

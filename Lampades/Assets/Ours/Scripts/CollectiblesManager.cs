@@ -18,7 +18,7 @@ public class CollectiblesManager : MonoBehaviour {
         if (collected && stuck)
         {
             transform.localPosition = stuckPosition;
-            print(name+" "+transform.position);
+         //   print(name+" "+transform.position);
         }
 
         if(rotating)

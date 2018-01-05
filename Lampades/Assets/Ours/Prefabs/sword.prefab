@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4864862150667172}
   - component: {fileID: 212379017921051778}
+  - component: {fileID: 60096675004449868}
   m_Layer: 0
   m_Name: sword
   m_TagString: Untagged
@@ -40,6 +41,75 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &60096675004449868
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1979695840857976}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.42, y: 4.09}
+    newSize: {x: 1.42, y: 4.09}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.31, y: -1.8249999}
+      - {x: 0.24, y: -1.8249999}
+      - {x: 0.45999998, y: -1.505}
+      - {x: 0.51, y: -1.485}
+      - {x: 0.56, y: -1.4449999}
+      - {x: 0.57, y: -1.3249999}
+      - {x: 0.51, y: -1.265}
+      - {x: 0.45999998, y: -1.245}
+      - {x: 0.32999998, y: -1.2049999}
+      - {x: 0.34, y: -1.145}
+      - {x: 0.69, y: 1.105}
+      - {x: 0.71, y: 1.235}
+      - {x: 0.71, y: 1.4649999}
+      - {x: 0.51, y: 1.685}
+      - {x: 0.17999999, y: 2.0449998}
+      - {x: -0.17, y: 2.0449998}
+      - {x: -0.22999999, y: 1.985}
+      - {x: -0.29, y: 1.895}
+      - {x: -0.45, y: 1.6949999}
+      - {x: -0.62, y: 1.4549999}
+      - {x: -0.63, y: 1.415}
+      - {x: -0.63, y: 1.405}
+      - {x: -0.53999996, y: 0.715}
+      - {x: -0.48, y: 0.235}
+      - {x: -0.47, y: 0.16499999}
+      - {x: -0.42, y: -0.235}
+      - {x: -0.41, y: -0.305}
+      - {x: -0.37, y: -0.625}
+      - {x: -0.29999998, y: -1.175}
+      - {x: -0.29, y: -1.235}
+      - {x: -0.45999998, y: -1.245}
+      - {x: -0.55, y: -1.295}
+      - {x: -0.58, y: -1.405}
+      - {x: -0.51, y: -1.485}
+      - {x: -0.45, y: -1.505}
+      - {x: -0.24, y: -1.505}
+      - {x: -0.29, y: -1.8249999}
+      - {x: -0.32, y: -1.8249999}
+      - {x: -0.39, y: -1.875}
+      - {x: -0.41, y: -1.985}
+      - {x: -0.38, y: -2.0249999}
+      - {x: -0.35999998, y: -2.0449998}
+      - {x: 0.35999998, y: -2.0449998}
+      - {x: 0.39, y: -1.9449999}
+      - {x: 0.38, y: -1.895}
 --- !u!212 &212379017921051778
 SpriteRenderer:
   m_ObjectHideFlags: 1

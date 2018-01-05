@@ -298,17 +298,17 @@ public class JointManager : MonoBehaviour {
         stickingObject.GetComponent<Collider2D>().enabled = true;
         stickingObject.layer = LayerMask.NameToLayer("Sticking");
         stickingObject.GetComponent<CollectiblesManager>().stuck = true;
-        
-        //TODO this is not nice, have to find some way to make this less hard code
-        if(stickingObject.name.Contains("Stick"))
-        {
-            stickingObject.GetComponent<StickConditionChecker>().finishedSticking = true;
-        }
-        
+       
+        stickingObject.GetComponent<ConditionChecker>().finishedSticking = true;
+     
 
         stickingObject.transform.parent = transform;
         stickingObject.GetComponent<CollectiblesManager>().stuckPosition = stickingObject.transform.localPosition;
+
+        DestroyImmediate(stickingObject.GetComponent<Collider2D>());
+        stickingObject.AddComponent<PolygonCollider2D>();
         stickingObject.GetComponent<Collider2D>().isTrigger = false;
+
         Destroy(stickingObject.GetComponent<Rigidbody2D>());
 
         if (gameObject.name.Equals("avatar"))

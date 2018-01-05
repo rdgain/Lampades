@@ -1484,6 +1484,24 @@ MonoBehaviour:
   centerCollider: {fileID: 1691956685}
   isSticking: 0
   another: {fileID: 71481055}
+--- !u!1 &1754390977 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1221188151014546, guid: d5361bcce62ffdf46a90ad5177c15489,
+    type: 2}
+  m_PrefabInternal: {fileID: 1041000401}
+--- !u!114 &1754390983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1754390977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 452ef436fc7b6e148b1db86b1f34f962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finishedSticking: 0
+  shieldSprite: {fileID: 0}
 --- !u!1 &1871789848
 GameObject:
   m_ObjectHideFlags: 0

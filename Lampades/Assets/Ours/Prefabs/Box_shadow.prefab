@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114311292794458440}
   m_Layer: 8
   m_Name: Box_shadow
-  m_TagString: Collectibles
+  m_TagString: Nether
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Collection : MonoBehaviour {
 
     public Dictionary<string,int> stuffs;
+    public AudioClip collectedClip;
     string[] stuffList;
 	// Use this for initialization
 	void Start () {
@@ -24,9 +25,7 @@ public class Collection : MonoBehaviour {
     List<GameObject> touchingObjects = new List<GameObject>();
 	// Update is called once per frame
 	void Update () {
-        //if (Input.GetKeyDown(KeyCode.F))
         {
-            //print("press f");
             for(int i=0;i<touchingObjects.Count;i++)
                 PickUpStuffs(touchingObjects[i]);
 
@@ -36,15 +35,10 @@ public class Collection : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        //print("collide!");
-        //print("tag other " + (coll.otherRigidbody.gameObject.tag));
-        //print("tag mine " + (coll.rigidbody.gameObject.tag));
 
-
-        if(gameObject.tag.Equals("Player") 
-            && coll.rigidbody.gameObject.tag.Equals("Collectibles"))
+        if(gameObject.tag.Equals(Constants.PLAYER_TAG) 
+            && coll.rigidbody.gameObject.tag.Equals(Constants.COLLECT_TAG))
         {
-            //print("collide!");
             touchingObjects.Add(coll.rigidbody.gameObject);
         }
         
@@ -57,12 +51,13 @@ public class Collection : MonoBehaviour {
 
     void PickUpStuffs(GameObject pickUpObject)
     {
+        if(collectedClip !=null)
+            AudioSource.PlayClipAtPoint(collectedClip, transform.position);
+
         string name_cut = getKeyFromName(pickUpObject);
         Destroy(pickUpObject);
         stuffs[name_cut] = stuffs[name_cut] + 1;
         UpdateStuffSize();
-        //print("added");
-        //print(stuffs[name_cut]);
     }
 
     public void StickedStuff(GameObject model)
@@ -80,7 +75,7 @@ public class Collection : MonoBehaviour {
 
     void UpdateStuffSize()
     {
-        Text stuffSizeText = GameObject.Find("StuffSize").GetComponent<Text>();
+        Text stuffSizeText = GameObject.Find(Constants.STUFF_SIZE_TEXTBOX).GetComponent<Text>();
 
         stuffSizeText.text = "";
         foreach (string key in stuffList)

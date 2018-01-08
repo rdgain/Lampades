@@ -13,16 +13,18 @@ public class ConditionChecker : MonoBehaviour {
     protected GameObject avatar;
     public bool finishedSticking;
 
+
+
     protected Dictionary<string, Condition> conditions;
 	// Use this for initialization
 	protected void Start () {
 
         finishedSticking = false;
 
-        if (name.Contains("hadow"))
-            avatar = GameObject.Find("shadow");
+        if (tag.Equals(Constants.NETHER_TAG))
+            avatar = GameObject.Find(Constants.SHADOW_NAME);
         else
-            avatar = GameObject.Find("avatar");
+            avatar = GameObject.Find(Constants.AVATAR_NAME);
 
 
         sprite = gameObject.GetComponent<SpriteRenderer>();

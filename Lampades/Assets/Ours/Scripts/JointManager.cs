@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class JointManager : MonoBehaviour {
 
-    public GameObject boxModel;
-    public GameObject stickModel;
-
     public bool insideLight = false;
 
     public float moveSpeed = 0.075f;
@@ -38,21 +35,10 @@ public class JointManager : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.B))
             {
-                //Need to decrease stuff num in collection down
-                //Create sticking option menu
 
                 selectIndex(pickingIndex,1);
 
-                //if (name.Equals("shadow"))
-                //{
-                //    pickingIndex = another.GetComponent<JointManager>().pickingIndex;
-                //    if (another.GetComponent<JointManager>().insideLight)
-                //    {
-                //        Stick(stuffList[pickingIndex]);
-                //    }
-                //}
-
-                if (name.Equals("avatar") && insideLight)
+                if (name.Equals(Constants.AVATAR_NAME) && insideLight)
                 {
                     if (GetComponent<Collection>().stuffs[stuffList[pickingIndex]] == 0)
                     {
@@ -70,7 +56,6 @@ public class JointManager : MonoBehaviour {
             PreSticking();
         }
 
-        //print("focusJoint connect with " + focusJoint.connectedBody.name);
     }
 
     void SelectStickingModel()
@@ -95,10 +80,10 @@ public class JointManager : MonoBehaviour {
 
             selectIndex(storedCurrent, direction);
 
-              if (pickingIndex != storedCurrent)
+            if (pickingIndex != storedCurrent)
             {
-            Destroy(stickingObject);
-            Stick(stuffList[pickingIndex]);
+                Destroy(stickingObject);
+                Stick(stuffList[pickingIndex]);
 
                 Destroy(another.GetComponent<JointManager>().stickingObject);
                 another.GetComponent<JointManager>().Stick(stuffList[pickingIndex]);
@@ -109,7 +94,7 @@ public class JointManager : MonoBehaviour {
 
     void selectIndex(int storedCurrent, int direction)
     {
-        if (name.Equals("shadow"))
+        if (name.Equals(Constants.SHADOW_NAME))
         {
             
             return;
@@ -197,10 +182,8 @@ public class JointManager : MonoBehaviour {
     // check if it's still sticking
     bool AllowTransform()
     {
-        //print(stickingObject.GetComponent<Collider2D>().bounds+" "+ GetComponent<Collider2D>().bounds);
-        //return isTouching;
 
-        if (gameObject.name.Equals("shadow"))
+        if (gameObject.name.Equals(Constants.SHADOW_NAME))
             return another.GetComponent<JointManager>().AllowTransform();
 
         bool touching = stickingObject.GetComponent<Collider2D>().IsTouching(centerCollider);
@@ -244,28 +227,16 @@ public class JointManager : MonoBehaviour {
     public void Stick(string toStickType)
     {
 
-        GameObject toStick;
-
-        if (toStickType.Equals("Box"))
-            toStick = boxModel;
-
-        else if (toStickType.Equals("Stick"))
-            toStick = stickModel;
-
-        else toStick = null;
-
-        //if (gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
+        GameObject toStick = Constants.getModel(name,toStickType);
 
         GameObject newStuff = Instantiate(toStick, transform.position, transform.rotation);
-        //newStuff.layer = LayerMask.NameToLayer("Sticking");
         newStuff.GetComponent<Collider2D>().isTrigger = true;
         newStuff.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
         newStuff.GetComponent<CollectiblesManager>().rotating = false;
         newStuff.GetComponent<CollectiblesManager>().collected = true;
     
-        if(name.Equals("avatar"))
+        if(name.Equals(Constants.AVATAR_NAME))
         {
             newStuff.GetComponent<SpriteRenderer>().color = new Color(fromRGB(247), fromRGB(151), fromRGB(231), 1);
         }
@@ -273,7 +244,7 @@ public class JointManager : MonoBehaviour {
         
 
         stickingObject = newStuff;
-    }
+    
         isSticking = true;
         keptMoveForce = GetComponent<PlayerControl>().keptMoveForce;
         GetComponent<PlayerControl>().canMove = false;
@@ -287,16 +258,9 @@ public class JointManager : MonoBehaviour {
 
     void CreateJointAndCollider()
     {
-        /*
-         * create joint & bring collider back
-         * */
-
-        //stickingObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-        //FixedJoint2D joint = gameObject.AddComponent<FixedJoint2D>();
-        //joint.connectedBody = stickingObject.GetComponent<Rigidbody2D>();
 
         stickingObject.GetComponent<Collider2D>().enabled = true;
-        stickingObject.layer = LayerMask.NameToLayer("Sticking");
+        stickingObject.layer = LayerMask.NameToLayer(Constants.STICK_LAYER);
         stickingObject.GetComponent<CollectiblesManager>().stuck = true;
        
         stickingObject.GetComponent<ConditionChecker>().finishedSticking = true;
@@ -305,13 +269,16 @@ public class JointManager : MonoBehaviour {
         stickingObject.transform.parent = transform;
         stickingObject.GetComponent<CollectiblesManager>().stuckPosition = stickingObject.transform.localPosition;
 
+        // This does not work in all cases, we have to find a way to set it to pre-defined colliders and hash out from
+        // Constants or so, but I can't find how to set colliders to pre-defined one
+
         DestroyImmediate(stickingObject.GetComponent<Collider2D>());
         stickingObject.AddComponent<PolygonCollider2D>();
         stickingObject.GetComponent<Collider2D>().isTrigger = false;
 
         Destroy(stickingObject.GetComponent<Rigidbody2D>());
 
-        if (gameObject.name.Equals("avatar"))
+        if (gameObject.name.Equals(Constants.AVATAR_NAME))
         {
             gameObject.GetComponent<Collection>().StickedStuff(stickingObject);
         }

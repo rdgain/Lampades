@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114866160393555086}
   m_Layer: 8
   m_Name: Stick_shadow
-  m_TagString: Collectibles
+  m_TagString: Nether
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,10 +116,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf422c7b28f5384ea0cd04a3c482383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finishedSticking: 0
   swordSprite: {fileID: 1979695840857976, guid: bb0729f24d833b5419b4f959afbdeca8,
     type: 2}
-  swordCondition: 0
-  finishedSticking: 0
 --- !u!212 &212151621542294282
 SpriteRenderer:
   m_ObjectHideFlags: 1

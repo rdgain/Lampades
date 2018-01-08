@@ -10,20 +10,20 @@ public class Generator : MonoBehaviour {
     public GameObject realLight;
     public Camera camera;
 
-    public GameObject stickModel;
-    public GameObject boxModel;
-    public int countPlatform;
-    public float probStick = 0.8f;
-    public float probBox = 0.5f;
-    public int numRegion = 1;
-
+    int countPlatform;
+   
     public GameObject player;
     float moveForce;
 
-    public string[] stuffList = { "Stick", "Box" };
+    public string[] stuffList = Constants.stuffsList;
+
+    public float[] probList;
+
+    public int numRegion = 1;
 
     // Use this for initialization
     void Start () {
+        countPlatform = Constants.platform_num;
         moveForce = player.GetComponent<PlayerControl>().moveForce;
     }
 	
@@ -68,7 +68,7 @@ public class Generator : MonoBehaviour {
             if (countPlatform > 1)
             {
                 GenerateNewFloor();
-                if (tag.Equals("Real"))
+                if (tag.Equals(Constants.REAL_TAG))
                     GenerateStuffOnNewFloor();
 
                 countPlatform--;
@@ -88,7 +88,7 @@ public class Generator : MonoBehaviour {
     void PutLightOnNewFloor()
     {
         
-        if(tag.Equals("Real"))
+        if(tag.Equals(Constants.REAL_TAG))
         {
             Transform tmpParent = lastFloor.transform.parent;
             realLight = Instantiate(preLight, lastFloor.transform.position, preLight.transform.rotation);
@@ -115,19 +115,13 @@ public class Generator : MonoBehaviour {
 
     void GenerateStuffOnNewFloor()
     {
-        float floorLength = lastFloor.GetComponent<BoxCollider2D>().size.x * lastFloor.transform.localScale.x;
-        
 
+        float floorLength = lastFloor.GetComponent<BoxCollider2D>().size.x * lastFloor.transform.localScale.x;
         Vector3 floorPos = lastFloor.transform.position;
         float floorPosX = floorPos.x;
 
         float eachRegionLength = floorLength / (float) numRegion;
         float initialPos = floorPosX - floorLength/2;
-
-        //print("floorL " + floorLength);
-        //print("eachRegionL " + eachRegionLength);
-        //print("floorX " + floorPosX);
-        //print("initPos " + initialPos);
 
         for (int i = 0; i < numRegion; i++)
         {
@@ -135,21 +129,12 @@ public class Generator : MonoBehaviour {
             float randomValue = Random.Range(0f, 1f);
             float randOffset = Random.Range(0, eachRegionLength);
 
-            //print("curX " + currentXPos);
-            //print("offset " + randOffset);
-
-            if (randomValue < probBox)
+            for(int j=0;j<stuffList.Length;j++)
             {
-                //print("box");
-                InstantiateObject(boxModel, currentXPos + randOffset, floorPos);
-            }
-
-            randOffset = Random.Range(0, eachRegionLength);
-
-            if (randomValue < probStick)
-            {
-                //print("stick");
-                InstantiateObject(stickModel, currentXPos + randOffset, floorPos);
+                if(randomValue < probList[j])
+                {
+                    InstantiateObject(Constants.getModel(Constants.AVATAR_NAME, stuffList[j]), currentXPos + randOffset, floorPos);
+                }
             }
         }
     }

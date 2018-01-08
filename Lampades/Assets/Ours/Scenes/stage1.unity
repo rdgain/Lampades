@@ -135,7 +135,7 @@ Transform:
   m_Children:
   - {fileID: 1437326610}
   m_Father: {fileID: 1989004051}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &71481055
 GameObject:
@@ -147,7 +147,6 @@ GameObject:
   - component: {fileID: 71481056}
   - component: {fileID: 71481057}
   - component: {fileID: 71481058}
-  - component: {fileID: 71481059}
   - component: {fileID: 71481060}
   - component: {fileID: 71481062}
   - component: {fileID: 71481061}
@@ -171,7 +170,7 @@ Transform:
   - {fileID: 147303148}
   - {fileID: 523536684}
   m_Father: {fileID: 1989004051}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &71481057
 SpriteRenderer:
@@ -235,23 +234,6 @@ MonoBehaviour:
   jumpClips: []
   jumpForce: 500
   floor: {fileID: 1437326609}
---- !u!95 &71481059
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 71481055}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1ad1c509ffb314b2b933a73b401aae26, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!58 &71481060
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -278,8 +260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21e2cf2f9df644843ba68d24356633ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxModel: {fileID: 1084888447266562, guid: d2a146edbd9c05e42af850fabed55084, type: 2}
-  stickModel: {fileID: 1457177172561208, guid: 74d900b29a32c904b8df8f6228e4a1db, type: 2}
   insideLight: 0
   moveSpeed: 0.075
   rotateSpeed: 2
@@ -386,7 +366,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1989004051}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &108676380
 MonoBehaviour:
@@ -641,6 +621,7 @@ GameObject:
   m_Component:
   - component: {fileID: 619943213}
   - component: {fileID: 619943214}
+  - component: {fileID: 619943215}
   m_Layer: 0
   m_Name: realworld
   m_TagString: Real
@@ -658,8 +639,9 @@ Transform:
   m_LocalPosition: {x: 0.05, y: -8.34, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1263275317}
   - {fileID: 1691956680}
+  - {fileID: 1263275317}
+  - {fileID: 1607341796}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -679,16 +661,31 @@ MonoBehaviour:
   preLight: {fileID: 1706306690235138, guid: 9d20f19ba781cdb48a0d30928ae2db0e, type: 2}
   realLight: {fileID: 0}
   camera: {fileID: 1607341795}
-  stickModel: {fileID: 1154297931207618, guid: f3e9374a6b5b6cf478e7f226e53fd7d5, type: 2}
-  boxModel: {fileID: 1221188151014546, guid: d5361bcce62ffdf46a90ad5177c15489, type: 2}
-  countPlatform: 1
-  probStick: 0.2
-  probBox: 0.1
-  numRegion: 10
   player: {fileID: 1691956679}
   stuffList:
   - Stick
   - Box
+  probList:
+  - 0.8
+  - 0.5
+  numRegion: 10
+--- !u!114 &619943215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 619943212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6549567f2ca4a444b1df9bedee73030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  realModel:
+  - {fileID: 1154297931207618, guid: f3e9374a6b5b6cf478e7f226e53fd7d5, type: 2}
+  - {fileID: 1221188151014546, guid: d5361bcce62ffdf46a90ad5177c15489, type: 2}
+  netherModel:
+  - {fileID: 1457177172561208, guid: 74d900b29a32c904b8df8f6228e4a1db, type: 2}
+  - {fileID: 1084888447266562, guid: d2a146edbd9c05e42af850fabed55084, type: 2}
 --- !u!1 &738241687
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,9 +1009,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1927931260}
-  - {fileID: 1607341796}
   m_Father: {fileID: 619943213}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1344391492
 GameObject:
@@ -1152,6 +1148,7 @@ GameObject:
   - component: {fileID: 1607341794}
   - component: {fileID: 1607341793}
   - component: {fileID: 1607341791}
+  - component: {fileID: 1607341792}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1171,6 +1168,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1691956679}
+--- !u!81 &1607341792
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1607341790}
+  m_Enabled: 1
 --- !u!92 &1607341793
 Behaviour:
   m_ObjectHideFlags: 0
@@ -1231,8 +1235,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -1.8999996, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1263275317}
-  m_RootOrder: 1
+  m_Father: {fileID: 619943213}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1663477113
 Prefab:
@@ -1310,13 +1314,13 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1691956679}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.54, z: 0}
+  m_LocalPosition: {x: 0, y: -2.76, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 1871789849}
   - {fileID: 509444278}
   m_Father: {fileID: 619943213}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1691956681
 MonoBehaviour:
@@ -1449,9 +1453,7 @@ MonoBehaviour:
   moveForce: 365
   maxSpeed: 8
   jumpClips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: de5ae2527199e924794cd48308469617, type: 3}
   jumpForce: 500
   floor: {fileID: 1927931259}
 --- !u!114 &1691956688
@@ -1465,6 +1467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14869cb5a95951b4e8b1612232c0fc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectedClip: {fileID: 8300000, guid: 801086ded2ed3d541bee4ec46cb755cc, type: 3}
 --- !u!114 &1691956689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1476,8 +1479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21e2cf2f9df644843ba68d24356633ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxModel: {fileID: 1221188151014546, guid: d5361bcce62ffdf46a90ad5177c15489, type: 2}
-  stickModel: {fileID: 1154297931207618, guid: f3e9374a6b5b6cf478e7f226e53fd7d5, type: 2}
   insideLight: 0
   moveSpeed: 0.075
   rotateSpeed: 2
@@ -1609,9 +1610,9 @@ Transform:
   m_LocalPosition: {x: 0.18986475, y: -0.6453479, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 108676379}
   - {fileID: 71481056}
   - {fileID: 52891474}
+  - {fileID: 108676379}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1631,13 +1632,9 @@ MonoBehaviour:
   preLight: {fileID: 1368826814878846, guid: 45d9968cb22267e4d8f2a22b78ec13e1, type: 2}
   realLight: {fileID: 0}
   camera: {fileID: 108676378}
-  stickModel: {fileID: 1457177172561208, guid: 74d900b29a32c904b8df8f6228e4a1db, type: 2}
-  boxModel: {fileID: 1084888447266562, guid: d2a146edbd9c05e42af850fabed55084, type: 2}
-  countPlatform: 1
-  probStick: 0.8
-  probBox: 0.5
-  numRegion: 10
   player: {fileID: 71481055}
   stuffList:
   - Stick
   - Box
+  probList: []
+  numRegion: 10

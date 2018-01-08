@@ -13,6 +13,7 @@ public class PlayerControl : MonoBehaviour
 	public float moveForce;			// Amount of force added to move the player left and right.
 	public float maxSpeed;				// The fastest the player can travel in the x axis.
 	public AudioClip[] jumpClips;			// Array of clips for when the player jumps.
+   // public AudioSource jumpSource;
 	public float jumpForce = 1000f;			// Amount of force added when the player jumps.
 	//public AudioClip[] taunts;				// Array of clips for when the player taunts.
 	//public float tauntProbability = 50f;	// Chance of a taunt happening.
@@ -40,8 +41,7 @@ public class PlayerControl : MonoBehaviour
 
 	void Update()
 	{
-    //    print(canMove + " " + moveForce);
-        
+       
         if (canMove)
         {
             // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
@@ -50,9 +50,11 @@ public class PlayerControl : MonoBehaviour
             // If the jump button is pressed and the player is grounded then the player should jump.
 
             // Add, remove button by (in unity) Edit -> Project Settings -> Input -> Input Manager -> Jump
-         //   print(name + " " + grounded);
+            //   print(name + " " + grounded);
             if (Input.GetButtonDown("Jump") && grounded)
+            {
                 jump = true;
+            }
 
         }
 
@@ -92,15 +94,19 @@ public class PlayerControl : MonoBehaviour
 		// If the player should jump...
 		if(jump)
 		{
-			// Set the Jump animator trigger parameter.
-			//anim.SetTrigger("Jump");
+            // Set the Jump animator trigger parameter.
+            //anim.SetTrigger("Jump");
 
-			// Play a random jump audio clip.
-			//int i = Random.Range(0, jumpClips.Length);
-			//AudioSource.PlayClipAtPoint(jumpClips[i], transform.position);
+            // print(name);
+            // Play a random jump audio clip.
+            if (jumpClips.Length != 0)
+            {
+                int i = Random.Range(0, jumpClips.Length);
+                AudioSource.PlayClipAtPoint(jumpClips[i], transform.position);
+            }
 
-			// Add a vertical force to the player.
-			GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
+            // Add a vertical force to the player.
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
 
 			// Make sure the player can't jump again until the jump conditions from Update are satisfied.
 			jump = false;
